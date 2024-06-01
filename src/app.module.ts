@@ -11,6 +11,7 @@ import { Card } from './card/entities/card.entity';
 import { Coluna } from './colunas/entities/coluna.entity';
 import { Usuario } from './usuario/entities/usuario.entity';
 import { AuthModule } from './auth/auth.module';
+import { AuthGuard } from './auth/auth/auth.guard';
 
 @Module({
   imports: [UsuarioModule, QuadroModule, ColunasModule, CardModule,
@@ -32,6 +33,6 @@ import { AuthModule } from './auth/auth.module';
     AuthModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AuthGuard],
 })
 export class AppModule {}

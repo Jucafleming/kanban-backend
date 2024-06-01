@@ -7,7 +7,7 @@ export class Coluna {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 100 })
+  @Column()
   nome: string;
 
   @Column()

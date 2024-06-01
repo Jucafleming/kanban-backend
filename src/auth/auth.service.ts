@@ -5,6 +5,7 @@ import { Usuario } from 'src/usuario/entities/usuario.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
@@ -12,6 +13,7 @@ export class AuthService {
   constructor(
     @InjectRepository(Usuario)
     private usuarioRepository: Repository<Usuario>,
+    private jwtService: JwtService,
   ){}
 
   async login(loginDto: LoginDto) {
@@ -27,22 +29,11 @@ export class AuthService {
       throw new UnauthorizedException('Login Invalido');
     }
 
-    return usuario;
+    const payload = { email: usuario.email, id: usuario.id };
+
+    return {
+      accessToken: await this.jwtService.signAsync(payload),
+    };
   }
 
-  findAll() {
-    return `This action returns all auth`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
-
-  update(id: number, registerDto: RegisterDto) {
-    return `This action updates a #${id} auth`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
-  }
 }

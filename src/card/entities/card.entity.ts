@@ -1,13 +1,6 @@
 import { Coluna } from 'src/colunas/entities/coluna.entity';
 import { Usuario } from 'src/usuario/entities/usuario.entity';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
-
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, } from 'typeorm';
 @Entity()
 export class Card {
   @PrimaryGeneratedColumn()

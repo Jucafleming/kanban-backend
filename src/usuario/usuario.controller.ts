@@ -1,36 +1,30 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller,Request, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { UsuarioService } from './usuario.service';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
+import { AuthGuard, PayloadRequest } from 'src/auth/auth/auth.guard';
 
 @Controller('usuario')
 export class UsuarioController {
   constructor(private readonly usuarioService: UsuarioService) {}
 
-  @Post()
-  create(@Body() createUsuarioDto: CreateUsuarioDto) {
-    return this.usuarioService.create(createUsuarioDto);
+  @Get()
+  @UseGuards(AuthGuard)
+  findOne(@Request() req: PayloadRequest) {
+    return this.usuarioService.findOne(req.usuario.id);
   }
 
-  @Get('/quadro/:quadroId')
-  findAll(@Param('quadroId') quadroId: number) {
-    return this.usuarioService.findAllUsuariosByQuadroId(quadroId);
+  @Patch()
+  @UseGuards(AuthGuard)
+  update(@Body() updateUsuarioDto: UpdateUsuarioDto, @Request() req: PayloadRequest) {
+    return this.usuarioService.update(req.usuario.id, updateUsuarioDto);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usuarioService.findOne(+id);
+  @Delete()
+  @UseGuards(AuthGuard)
+  remove(@Request() req: PayloadRequest) {
+    return this.usuarioService.remove(req.usuario.id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUsuarioDto: UpdateUsuarioDto) {
-    return this.usuarioService.update(+id, updateUsuarioDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-
-    //todo fetch do jwt
-    return this.usuarioService.remove(+id);
-  }
+ 
 }

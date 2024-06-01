@@ -10,7 +10,9 @@ export class Quadro {
     @Column()
     nome: string;
     
-    @ManyToMany(() => Usuario, (usuario)=> usuario.quadro)
+    @ManyToMany(() => Usuario, (usuario)=> usuario.quadro,{
+        onDelete: 'CASCADE',
+    })
     usuario: Usuario[];
 
     @OneToMany(() => Coluna, (quadro) => quadro.quadro)

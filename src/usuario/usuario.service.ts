@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -12,6 +12,8 @@ export class UsuarioService {
     @InjectRepository(Usuario)
     private usuarioRepository: Repository<Usuario>,
   ){}
+
+
   create(createUsuarioDto: CreateUsuarioDto) {
     const usuario = new Usuario();
 
@@ -22,13 +24,45 @@ export class UsuarioService {
    return this.usuarioRepository.save(usuario);
   }
 
-  findAllUsuariosByQuadroId(quadroId: number) {
-    return this.usuarioRepository.find({
-      where:{
-        quadro: {id: quadroId}
-      }
-    })
+  async isConnectedToQuadro(id: number, quadroId: number) {
+    const user = await this.usuarioRepository.findOne({
+      where: {
+        id,
+        quadro: {
+          id: quadroId,
+        },
+      },
+      relations: ['quadro'],
+    });
+
+    if (!user) {
+      throw new UnauthorizedException('Voce nao faz parte deste quadro');
+    }
+
+    return true;
   }
+
+
+  async isConnectedToColuna(id: number, colunaId: number) {
+    const user = await this.usuarioRepository.findOne({
+      where: {
+        id,
+        quadro: {
+          colunas: {
+            id: colunaId,
+          },
+        },
+      },
+      relations: ['quadro', 'quadro.colunas'],
+    });
+
+    if (!user) {
+      throw new UnauthorizedException('Voce nao faz parte deste quadro');
+    }
+
+    return true;
+  }
+
 
   findOne(id: number) {
     return this.usuarioRepository.findOneBy({ id });
