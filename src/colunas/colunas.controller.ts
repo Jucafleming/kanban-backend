@@ -12,15 +12,12 @@ export class ColunasController {
     return this.colunasService.create(createColunaDto);
   }
 
-  @Get()
-  findAll() {
-    return this.colunasService.findAll();
+  @Get('/quadro/:quadroId')
+  findAll(@Param('quadroId') quadroId: string) {
+    return this.colunasService.findAllByQuadroId(Number(quadroId));
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.colunasService.findOne(+id);
-  }
+
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateColunaDto: UpdateColunaDto) {

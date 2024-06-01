@@ -1,1 +1,5 @@
-export class CreateColunaDto {}
+export class CreateColunaDto {
+    nome: string;
+    ordem: number;
+    quadroId: number;
+}

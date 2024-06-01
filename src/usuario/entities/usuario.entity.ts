@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, ManyToMany, JoinTable } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn,OneToMany, Column, BeforeInsert, ManyToMany, JoinTable } from 'typeorm';
 import * as bycript from 'bcrypt'
 import { Quadro } from 'src/quadro/entities/quadro.entity';
+import { Card } from 'src/card/entities/card.entity';
 
 @Entity()
 export class Usuario {
@@ -23,6 +24,8 @@ export class Usuario {
     @JoinTable()
     quadro: Quadro[];
 
+    @OneToMany(() => Card, (usuario) => usuario.assigne)
+    cards: Card[];
 
     @BeforeInsert()
     async hashPassword(){

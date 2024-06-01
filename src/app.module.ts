@@ -10,6 +10,7 @@ import { Quadro } from './quadro/entities/quadro.entity';
 import { Card } from './card/entities/card.entity';
 import { Coluna } from './colunas/entities/coluna.entity';
 import { Usuario } from './usuario/entities/usuario.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [UsuarioModule, QuadroModule, ColunasModule, CardModule,
@@ -27,7 +28,8 @@ import { Usuario } from './usuario/entities/usuario.entity';
         Usuario
       ],
       synchronize: true,
-    })
+    }),
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],
