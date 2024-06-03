@@ -15,7 +15,7 @@ export class Quadro {
     })
     usuario: Usuario[];
 
-    @OneToMany(() => Coluna, (quadro) => quadro.quadro)
+    @OneToMany(() => Coluna, (quadro) => quadro.quadro, { cascade: true })
     colunas: Coluna[];
 
 }

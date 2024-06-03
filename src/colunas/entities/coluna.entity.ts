@@ -16,7 +16,7 @@ export class Coluna {
   @Column()
   quadroId: number;
 
-  @ManyToOne(() => Quadro, (quadro) => quadro.colunas)
+  @ManyToOne(() => Quadro, (quadro) => quadro.colunas ,{ onDelete: 'CASCADE' })
   @JoinColumn()
   quadro: Quadro;
 

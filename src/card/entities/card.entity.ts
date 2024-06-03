@@ -25,7 +25,7 @@ export class Card {
   @Column()
   colunaId: number;
 
-  @ManyToOne(() => Coluna, (coluna) => coluna.cards)
+  @ManyToOne(() => Coluna, (coluna) => coluna.cards,  { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
   @JoinColumn()
   coluna: Coluna;
 }
