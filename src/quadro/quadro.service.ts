@@ -47,7 +47,7 @@ export class QuadroService {
         id,
         usuario: { id: usuarioId },
       },
-      relations: ['user', 'colunas', 'colunas.cards'],
+      relations: ['usuario', 'colunas', 'colunas.cards'],
     });
   }
 
